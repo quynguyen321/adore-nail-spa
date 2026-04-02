@@ -72,7 +72,7 @@ function Card({ children, className = '' }) {
 function Button({ children, onClick, full = false, outline = false, href }) {
   const className = [
     'rounded-full px-6 py-3 text-sm uppercase tracking-[0.18em] transition inline-flex items-center justify-center',
-    full ? 'w-full' : '',
+    full ? 'w-full sm:w-auto' : '',
     outline
       ? 'border border-stone-300 bg-transparent text-stone-700 hover:bg-stone-100'
       : 'bg-stone-700 text-white hover:bg-stone-800',
@@ -131,29 +131,76 @@ function Logo() {
 }
 
 function NavBar({ currentPage, setCurrentPage }) {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleNavClick = (page) => {
+    setCurrentPage(page);
+    setMobileOpen(false);
+  };
+
   return (
     <header className="sticky top-0 z-50 border-b border-stone-200/80 bg-[#f7f1ea]/95 backdrop-blur">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-5 sm:px-6 lg:px-8">
-        <button type="button" onClick={() => setCurrentPage('home')}>
-          <Logo />
-        </button>
+      <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between gap-4">
+          <button type="button" onClick={() => handleNavClick('home')}>
+            <Logo />
+          </button>
 
-        <nav className="hidden items-center gap-8 md:flex">
-          {nav.map((item) => (
-            <button
-              key={item.page}
-              type="button"
-              onClick={() => setCurrentPage(item.page)}
-              className={`text-sm uppercase tracking-[0.18em] transition ${
-                currentPage === item.page ? 'text-stone-900' : 'text-stone-500 hover:text-stone-800'
-              }`}
-            >
-              {item.label}
-            </button>
-          ))}
-        </nav>
+          <nav className="hidden items-center gap-8 md:flex">
+            {nav.map((item) => (
+              <button
+                key={item.page}
+                type="button"
+                onClick={() => handleNavClick(item.page)}
+                className={`text-sm uppercase tracking-[0.18em] transition ${
+                  currentPage === item.page
+                    ? 'text-stone-900'
+                    : 'text-stone-500 hover:text-stone-800'
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </nav>
 
-        <Button href={site.bookingLink}>Book Now</Button>
+          <div className="hidden md:block">
+            <Button href={site.bookingLink}>Book Now</Button>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-stone-300 bg-white text-stone-700 md:hidden"
+          >
+            ☰
+          </button>
+        </div>
+
+        {mobileOpen && (
+          <div className="mt-4 rounded-[24px] border border-stone-200 bg-white p-4 shadow-sm md:hidden">
+            <div className="flex flex-col gap-2">
+              {nav.map((item) => (
+                <button
+                  key={item.page}
+                  type="button"
+                  onClick={() => handleNavClick(item.page)}
+                  className={`rounded-2xl px-4 py-3 text-left text-sm uppercase tracking-[0.18em] transition ${
+                    currentPage === item.page
+                      ? 'bg-stone-100 text-stone-900'
+                      : 'text-stone-600 hover:bg-stone-50 hover:text-stone-800'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+              <div className="pt-2">
+                <Button href={site.bookingLink} full>
+                  Book Now
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </header>
   );
@@ -212,31 +259,32 @@ function HomePage({ setCurrentPage }) {
     <main>
       <section className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(214,199,185,0.35),transparent_32%)]" />
-        <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:px-8 lg:py-28">
+        <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:px-8 lg:py-28">
           <div>
-            <div className="inline-flex rounded-full border border-stone-300 bg-white/60 px-4 py-2 text-xs uppercase tracking-[0.24em] text-stone-500">
+            <div className="inline-flex rounded-full border border-stone-300 bg-white/60 px-4 py-2 text-[11px] uppercase tracking-[0.24em] text-stone-500 sm:text-xs">
               Neutral Luxury Nail Experience
             </div>
 
-            <h1 className="mt-6 text-5xl font-semibold leading-tight text-stone-800 md:text-6xl lg:text-7xl">
+            <h1 className="mt-6 text-4xl font-semibold leading-tight text-stone-800 sm:text-5xl lg:text-7xl">
               Elegance in every detail.
             </h1>
 
-            <p className="mt-6 max-w-xl text-lg leading-8 text-stone-600">
+            <p className="mt-6 max-w-xl text-base leading-7 text-stone-600 sm:text-lg sm:leading-8">
               Welcome to Adore Nail Spa, a serene beauty destination where refined nail
               care, soft tones, and elevated service come together in one polished
               experience.
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-4">
-              <Button onClick={() => setCurrentPage('services')}>Explore Services</Button>
-              <Button onClick={() => setCurrentPage('gallery')} outline>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <Button onClick={() => setCurrentPage('services')} full>
+                Explore Services
+              </Button>
+              <Button onClick={() => setCurrentPage('gallery')} outline full>
                 View Gallery
               </Button>
             </div>
-        
 
-            <div className="mt-10 grid max-w-xl gap-4 sm:grid-cols-3">
+            <div className="mt-10 grid gap-4 sm:grid-cols-3">
               {[
                 { label: 'Luxury Care', value: '5-Star' },
                 { label: 'Atmosphere', value: 'Calm & Neutral' },
@@ -244,8 +292,10 @@ function HomePage({ setCurrentPage }) {
               ].map((item) => (
                 <Card key={item.label} className="bg-white/70">
                   <div className="p-5">
-                    <div className="text-2xl font-semibold text-stone-800">{item.value}</div>
-                    <div className="mt-2 text-xs uppercase tracking-[0.2em] text-stone-500">
+                    <div className="text-xl font-semibold text-stone-800 sm:text-2xl">
+                      {item.value}
+                    </div>
+                    <div className="mt-2 text-[11px] uppercase tracking-[0.2em] text-stone-500 sm:text-xs">
                       {item.label}
                     </div>
                   </div>
@@ -255,13 +305,13 @@ function HomePage({ setCurrentPage }) {
           </div>
 
           <div>
-            <div className="rounded-[32px] border border-stone-200 bg-gradient-to-br from-[#efe5da] via-[#faf7f2] to-[#ddd0c3] p-6 shadow-2xl">
+            <div className="rounded-[28px] border border-stone-200 bg-gradient-to-br from-[#efe5da] via-[#faf7f2] to-[#ddd0c3] p-5 shadow-2xl sm:rounded-[32px] sm:p-6">
               <div className="grid gap-5">
-                <div className="rounded-[24px] bg-white/80 p-8 shadow-sm">
+                <div className="rounded-[22px] bg-white/80 p-6 shadow-sm sm:rounded-[24px] sm:p-8">
                   <div className="text-sm uppercase tracking-[0.2em] text-stone-500">
                     Signature Beauty Ritual
                   </div>
-                  <h2 className="mt-4 text-3xl font-semibold text-stone-800">
+                  <h2 className="mt-4 text-2xl font-semibold text-stone-800 sm:text-3xl">
                     Polished, graceful, unforgettable
                   </h2>
                   <p className="mt-4 leading-7 text-stone-600">
@@ -275,7 +325,9 @@ function HomePage({ setCurrentPage }) {
                   <Card className="bg-[#f7f1ea]">
                     <div className="p-6">
                       <Icon>⏰</Icon>
-                      <p className="mt-3 text-lg font-medium text-stone-800">Flexible Hours</p>
+                      <p className="mt-3 text-lg font-medium text-stone-800">
+                        Flexible Hours
+                      </p>
                       <p className="mt-2 text-sm text-stone-600">
                         Perfect for weekday appointments and weekend self-care.
                       </p>
@@ -285,7 +337,9 @@ function HomePage({ setCurrentPage }) {
                   <Card className="bg-[#fbf8f4]">
                     <div className="p-6">
                       <Icon>📍</Icon>
-                      <p className="mt-3 text-lg font-medium text-stone-800">Easy to Visit</p>
+                      <p className="mt-3 text-lg font-medium text-stone-800">
+                        Easy to Visit
+                      </p>
                       <p className="mt-2 text-sm text-stone-600">
                         A welcoming luxury salon space designed for calm comfort.
                       </p>
@@ -307,7 +361,7 @@ function AboutPage() {
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
         <div className="max-w-3xl">
           <p className="text-sm uppercase tracking-[0.22em] text-stone-500">About Us</p>
-          <h1 className="mt-4 text-5xl font-semibold text-stone-800">
+          <h1 className="mt-4 text-4xl font-semibold text-stone-800 sm:text-5xl">
             A calm, polished space created for modern beauty.
           </h1>
           <p className="mt-6 text-lg leading-8 text-stone-600">
@@ -562,7 +616,7 @@ function ServicesPage() {
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
         <div className="max-w-3xl">
           <p className="text-sm uppercase tracking-[0.22em] text-stone-500">Services</p>
-          <h1 className="mt-4 text-5xl font-semibold text-stone-800">
+          <h1 className="mt-4 text-4xl font-semibold text-stone-800 sm:text-5xl">
             Signature Treatments
           </h1>
           <p className="mt-6 text-lg leading-8 text-stone-600">
@@ -590,7 +644,7 @@ function ServicesPage() {
 
           <div className="grid gap-6">
             {manicures.map((service) => (
-              <div key={service.name} className="rounded-[28px] border border-stone-200 bg-white p-8 shadow-sm">
+              <div key={service.name} className="rounded-[28px] border border-stone-200 bg-white p-6 shadow-sm sm:p-8">
                 <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
                   <div className="max-w-3xl">
                     <h3 className="text-2xl font-semibold text-stone-800">{service.name}</h3>
@@ -613,7 +667,7 @@ function ServicesPage() {
 
           <div className="grid gap-6">
             {pedicures.map((service) => (
-              <div key={service.name} className="rounded-[28px] border border-stone-200 bg-white p-8 shadow-sm">
+              <div key={service.name} className="rounded-[28px] border border-stone-200 bg-white p-6 shadow-sm sm:p-8">
                 <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
                   <div className="max-w-3xl">
                     <h3 className="text-2xl font-semibold text-stone-800">{service.name}</h3>
@@ -637,7 +691,7 @@ function ServicesPage() {
           </div>
 
           <div className="grid gap-8 lg:grid-cols-3">
-            <div className="rounded-[28px] border border-stone-200 bg-white p-8 shadow-sm">
+            <div className="rounded-[28px] border border-stone-200 bg-white p-6 shadow-sm sm:p-8">
               <h3 className="text-2xl font-semibold text-stone-800">Full Set</h3>
               <div className="mt-6 space-y-4">
                 {fullSet.map((item) => (
@@ -649,7 +703,7 @@ function ServicesPage() {
               </div>
             </div>
 
-            <div className="rounded-[28px] border border-stone-200 bg-white p-8 shadow-sm">
+            <div className="rounded-[28px] border border-stone-200 bg-white p-6 shadow-sm sm:p-8">
               <h3 className="text-2xl font-semibold text-stone-800">Fill-In</h3>
               <div className="mt-6 space-y-4">
                 {fillIn.map((item) => (
@@ -661,7 +715,7 @@ function ServicesPage() {
               </div>
             </div>
 
-            <div className="rounded-[28px] border border-stone-200 bg-[#f7f1ea] p-8 shadow-sm">
+            <div className="rounded-[28px] border border-stone-200 bg-[#f7f1ea] p-6 shadow-sm sm:p-8">
               <h3 className="text-2xl font-semibold text-stone-800">Add-Ons</h3>
               <div className="mt-6 space-y-4">
                 {addOns.map((item) => (
@@ -682,11 +736,11 @@ function ServicesPage() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <div className="rounded-[28px] border border-stone-200 bg-white p-8 shadow-sm">
+            <div className="rounded-[28px] border border-stone-200 bg-white p-6 shadow-sm sm:p-8">
               <h3 className="text-xl font-semibold text-stone-800">Polish Services</h3>
               <div className="mt-6 space-y-4">
                 {additionalServices.polish.map((item) => (
-                  <div key={item.name} className="flex justify-between">
+                  <div key={item.name} className="flex justify-between gap-4">
                     <span>{item.name}</span>
                     <span>{item.price}</span>
                   </div>
@@ -694,11 +748,11 @@ function ServicesPage() {
               </div>
             </div>
 
-            <div className="rounded-[28px] border border-stone-200 bg-white p-8 shadow-sm">
+            <div className="rounded-[28px] border border-stone-200 bg-white p-6 shadow-sm sm:p-8">
               <h3 className="text-xl font-semibold text-stone-800">Nail Care</h3>
               <div className="mt-6 space-y-4">
                 {additionalServices.nailCare.map((item) => (
-                  <div key={item.name} className="flex justify-between">
+                  <div key={item.name} className="flex justify-between gap-4">
                     <span>{item.name}</span>
                     <span>{item.price}</span>
                   </div>
@@ -706,11 +760,11 @@ function ServicesPage() {
               </div>
             </div>
 
-            <div className="rounded-[28px] border border-stone-200 bg-[#f7f1ea] p-8 shadow-sm">
+            <div className="rounded-[28px] border border-stone-200 bg-[#f7f1ea] p-6 shadow-sm sm:p-8">
               <h3 className="text-xl font-semibold text-stone-800">Enhancements</h3>
               <div className="mt-6 space-y-4">
                 {additionalServices.extras.map((item) => (
-                  <div key={item.name} className="flex justify-between">
+                  <div key={item.name} className="flex justify-between gap-4">
                     <span>{item.name}</span>
                     <span>{item.price}</span>
                   </div>
@@ -727,11 +781,11 @@ function ServicesPage() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <div className="rounded-[28px] border border-stone-200 bg-white p-8 shadow-sm">
+            <div className="rounded-[28px] border border-stone-200 bg-white p-6 shadow-sm sm:p-8">
               <h3 className="text-xl font-semibold text-stone-800">Face</h3>
               <div className="mt-6 space-y-4">
                 {waxing.face.map((item) => (
-                  <div key={item.name} className="flex justify-between">
+                  <div key={item.name} className="flex justify-between gap-4">
                     <span>{item.name}</span>
                     <span>{item.price}</span>
                   </div>
@@ -739,11 +793,11 @@ function ServicesPage() {
               </div>
             </div>
 
-            <div className="rounded-[28px] border border-stone-200 bg-white p-8 shadow-sm">
+            <div className="rounded-[28px] border border-stone-200 bg-white p-6 shadow-sm sm:p-8">
               <h3 className="text-xl font-semibold text-stone-800">Arms & Underarms</h3>
               <div className="mt-6 space-y-4">
                 {waxing.arms.map((item) => (
-                  <div key={item.name} className="flex justify-between">
+                  <div key={item.name} className="flex justify-between gap-4">
                     <span>{item.name}</span>
                     <span>{item.price}</span>
                   </div>
@@ -751,11 +805,11 @@ function ServicesPage() {
               </div>
             </div>
 
-            <div className="rounded-[28px] border border-stone-200 bg-[#f7f1ea] p-8 shadow-sm">
+            <div className="rounded-[28px] border border-stone-200 bg-[#f7f1ea] p-6 shadow-sm sm:p-8">
               <h3 className="text-xl font-semibold text-stone-800">Legs & Body</h3>
               <div className="mt-6 space-y-4">
                 {waxing.body.map((item) => (
-                  <div key={item.name} className="flex justify-between">
+                  <div key={item.name} className="flex justify-between gap-4">
                     <span>{item.name}</span>
                     <span>{item.price}</span>
                   </div>
@@ -772,12 +826,12 @@ function ServicesPage() {
           </div>
 
           <div className="grid gap-8 lg:grid-cols-2">
-            <div className="rounded-[28px] border border-stone-200 bg-white p-8 shadow-sm">
+            <div className="rounded-[28px] border border-stone-200 bg-white p-6 shadow-sm sm:p-8">
               <h3 className="text-2xl font-semibold text-stone-800">Full Set</h3>
               <div className="mt-6 space-y-6">
                 {lashes.fullSet.map((item) => (
                   <div key={item.name}>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between gap-4">
                       <span className="font-medium text-stone-800">{item.name}</span>
                       <span>{item.price}</span>
                     </div>
@@ -787,14 +841,14 @@ function ServicesPage() {
               </div>
             </div>
 
-            <div className="rounded-[28px] border border-stone-200 bg-[#f7f1ea] p-8 shadow-sm">
+            <div className="rounded-[28px] border border-stone-200 bg-[#f7f1ea] p-6 shadow-sm sm:p-8">
               <h3 className="text-2xl font-semibold text-stone-800">Refill</h3>
 
               <div className="mt-6">
                 <p className="text-sm uppercase tracking-[0.18em] text-stone-500">2 Week Refill</p>
                 <div className="mt-3 space-y-3">
                   {lashes.refill2Week.map((item) => (
-                    <div key={item.name} className="flex justify-between">
+                    <div key={item.name} className="flex justify-between gap-4">
                       <span>{item.name}</span>
                       <span>{item.price}</span>
                     </div>
@@ -806,7 +860,7 @@ function ServicesPage() {
                 <p className="text-sm uppercase tracking-[0.18em] text-stone-500">3 Week Refill</p>
                 <div className="mt-3 space-y-3">
                   {lashes.refill3Week.map((item) => (
-                    <div key={item.name} className="flex justify-between">
+                    <div key={item.name} className="flex justify-between gap-4">
                       <span>{item.name}</span>
                       <span>{item.price}</span>
                     </div>
@@ -825,15 +879,15 @@ function ServicesPage() {
 
           <div className="grid gap-6 md:grid-cols-3">
             {kidsServices.map((item) => (
-              <div key={item.name} className="rounded-[28px] border border-stone-200 bg-white p-8 shadow-sm">
+              <div key={item.name} className="rounded-[28px] border border-stone-200 bg-white p-6 shadow-sm sm:p-8">
                 <h3 className="text-xl font-semibold text-stone-800">{item.name}</h3>
                 {item.detail && <p className="mt-2 text-sm text-stone-500">{item.detail}</p>}
                 <div className="mt-6 space-y-4">
-                  <div className="flex justify-between">
+                  <div className="flex justify-between gap-4">
                     <span>Regular</span>
                     <span>{item.regular}</span>
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex justify-between gap-4">
                     <span>Gel</span>
                     <span>{item.gel}</span>
                   </div>
@@ -851,7 +905,7 @@ function ServicesPage() {
 
           <div className="grid gap-6">
             {headSpa.map((service) => (
-              <div key={service.name} className="rounded-[28px] border border-stone-200 bg-[#f7f1ea] p-8 shadow-sm">
+              <div key={service.name} className="rounded-[28px] border border-stone-200 bg-[#f7f1ea] p-6 shadow-sm sm:p-8">
                 <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                   <div className="max-w-3xl">
                     <div className="flex flex-wrap items-center gap-3">
@@ -885,7 +939,7 @@ function GalleryPage() {
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
         <div className="max-w-3xl">
           <p className="text-sm uppercase tracking-[0.22em] text-stone-500">Gallery</p>
-          <h1 className="mt-4 text-5xl font-semibold text-stone-800">
+          <h1 className="mt-4 text-4xl font-semibold text-stone-800 sm:text-5xl">
             A curated look at our signature style.
           </h1>
           <p className="mt-6 text-lg leading-8 text-stone-600">
@@ -897,7 +951,7 @@ function GalleryPage() {
         <div className="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {gallery.map((item, index) => (
             <Card key={item.title} className="overflow-hidden">
-              <div className="relative h-80">
+              <div className="relative h-72 sm:h-80">
                 <img src={item.image} alt={item.title} className="h-full w-full object-cover" />
                 <div className="absolute inset-0 bg-black/20" />
 
@@ -927,7 +981,7 @@ function ContactPage() {
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-[1.1fr_0.9fr] lg:gap-10 lg:px-8 lg:py-24">
         <div>
           <p className="text-sm uppercase tracking-[0.22em] text-stone-500">Contact Us</p>
-          <h1 className="mt-4 text-5xl font-semibold text-stone-800">
+          <h1 className="mt-4 text-4xl font-semibold text-stone-800 sm:text-5xl">
             Let’s plan your next luxury appointment.
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-stone-600">
