@@ -25,9 +25,8 @@ body {
 }
 
 .brand-logo {
-  filter: sepia(0.9) saturate(0.7) hue-rotate(-18deg) brightness(0.8) contrast(1.08);
-  mix-blend-mode: multiply;
-  opacity: 0.9;
+  filter: sepia(0.28) saturate(0.7) hue-rotate(-12deg) brightness(0.9) contrast(1.08);
+  opacity: 1;
 }
 
 .page-enter {

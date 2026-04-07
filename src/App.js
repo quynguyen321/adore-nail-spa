@@ -5,6 +5,8 @@ const site = {
   phone: '(469) 338-5134',
   email: 'adorenailsspa89@gmail.com',
   bookingLink: 'mailto:adorenailsspa89@gmail.com?subject=Book%20an%20Appointment',
+  facebookLink: 'https://www.facebook.com/profile.php?id=61587486039975&mibextid=wwXIfr&rdid=fCvkkkZpRsKO9L97&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1ED5K64t2H%2F%3Fmibextid%3DwwXIfr',
+  instagramLink: 'https://www.instagram.com/adorenailsandspa_mclendon?igsh=OTNiZ295bmR2OWJ4&utm_source=qr',
   address: '177 W Farm to Market Rd 550, Suite 104, McLendon-Chisholm, TX 75032',
   hours: [
     'Mon - Fri: 10:00 AM - 7:00 PM',
@@ -131,8 +133,65 @@ function Logo() {
     <img
       src="/adore-logo.png"
       alt="Adore Nail Spa logo"
-      className="brand-logo h-14 w-auto object-contain sm:h-16"
+      className="brand-logo h-16 w-auto object-contain sm:h-20"
     />
+  );
+}
+
+function FacebookIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5 fill-current">
+      <path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.6 1.7-1.6H16.7V3.8c-.3 0-1.2-.1-2.4-.1-2.4 0-4 1.4-4 4.2V10H7.7v3h2.6v8h3.2Z" />
+    </svg>
+  );
+}
+
+function InstagramIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5 fill-current">
+      <path d="M7.8 3h8.4A4.8 4.8 0 0 1 21 7.8v8.4a4.8 4.8 0 0 1-4.8 4.8H7.8A4.8 4.8 0 0 1 3 16.2V7.8A4.8 4.8 0 0 1 7.8 3Zm0 1.7A3.1 3.1 0 0 0 4.7 7.8v8.4a3.1 3.1 0 0 0 3.1 3.1h8.4a3.1 3.1 0 0 0 3.1-3.1V7.8a3.1 3.1 0 0 0-3.1-3.1H7.8Zm8.9 1.3a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 1.7A3.3 3.3 0 1 0 12 15.3 3.3 3.3 0 0 0 12 8.7Z" />
+    </svg>
+  );
+}
+
+function SocialButton({ href, label, icon, iconOnly = false }) {
+  const isPlaceholder = !href || href === '#';
+  const className = iconOnly
+    ? 'inline-flex h-11 w-11 items-center justify-center rounded-full border border-stone-300 bg-white/70 text-stone-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-white'
+    : 'inline-flex items-center gap-3 rounded-full border border-stone-300 bg-white/70 px-5 py-3 text-sm uppercase tracking-[0.14em] text-stone-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-white';
+  const content = (
+    <>
+      {iconOnly ? (
+        <span className="text-stone-700">{icon}</span>
+      ) : (
+        <>
+          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#f3ece4] text-stone-700">
+            {icon}
+          </span>
+          <span>{label}</span>
+        </>
+      )}
+    </>
+  );
+
+  if (isPlaceholder) {
+    return (
+      <button type="button" className={className} aria-label={label}>
+        {content}
+      </button>
+    );
+  }
+
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={className}
+      aria-label={label}
+    >
+      {content}
+    </a>
   );
 }
 
@@ -169,7 +228,19 @@ function NavBar({ currentPage, setCurrentPage }) {
             ))}
           </nav>
 
-          <div className="hidden md:block">
+          <div className="hidden items-center gap-3 md:flex">
+            <SocialButton
+              href={site.facebookLink}
+              label="Facebook"
+              icon={<FacebookIcon />}
+              iconOnly
+            />
+            <SocialButton
+              href={site.instagramLink}
+              label="Instagram"
+              icon={<InstagramIcon />}
+              iconOnly
+            />
             <Button href={site.bookingLink}>Book Now</Button>
           </div>
 
@@ -200,6 +271,22 @@ function NavBar({ currentPage, setCurrentPage }) {
                 </button>
               ))}
               <div className="pt-2">
+                <div className="mb-3 flex justify-center">
+                  <div className="flex items-center gap-3">
+                    <SocialButton
+                      href={site.facebookLink}
+                      label="Facebook"
+                      icon={<FacebookIcon />}
+                      iconOnly
+                    />
+                    <SocialButton
+                      href={site.instagramLink}
+                      label="Instagram"
+                      icon={<InstagramIcon />}
+                      iconOnly
+                    />
+                  </div>
+                </div>
                 <Button href={site.bookingLink} full>
                   Book Now
                 </Button>
@@ -549,38 +636,6 @@ function ServicesPage() {
     { name: 'Ombre', price: '$60+' },
   ];
 
-  const fillIn = [
-    { name: 'Gel X', price: '$65' },
-    { name: 'Builder Gel', price: '$65' },
-    { name: 'Acrylic', price: '$35' },
-  ];
-
-  const addOns = [
-    { name: 'French / Deep French', price: '$15+' },
-    { name: 'Length', price: '$5+' },
-    { name: 'Shaping', price: '$5+' },
-  ];
-
-  const additionalServices = {
-    polish: [
-      { name: 'Polish Change (Hands)', price: '$10' },
-      { name: 'Polish Change (Toes)', price: '$15' },
-      { name: 'Gel Polish Change', price: '$30' },
-    ],
-    nailCare: [
-      { name: 'Cut Down', price: '$10' },
-      { name: 'Nail Repair', price: '$5+' },
-      { name: 'Design', price: '$10+' },
-    ],
-    extras: [
-      { name: 'Nail Removal', price: '$10+' },
-      { name: 'Removal + Trim, Shape & Buff', price: '$15' },
-      { name: 'Paraffin Wax', price: '$10' },
-      { name: 'Collagen Socks', price: '$10' },
-      { name: 'Extra Massage', price: '$2 / min' },
-    ],
-  };
-
   const waxing = {
     face: [
       { name: 'Eyebrows', price: '$12' },
@@ -657,10 +712,11 @@ function ServicesPage() {
   ];
 
   return (
-    <main className="bg-[#fcfaf7]">
+    <main className="bg-[linear-gradient(180deg,#fcfaf7_0%,#f7f0e8_100%)]">
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
-        <div className="relative overflow-hidden rounded-[36px] border border-stone-200 bg-gradient-to-br from-[#f7f1ea] via-white to-[#efe2d4] p-8 shadow-sm sm:p-10 lg:p-14">
+        <div className="relative overflow-hidden rounded-[40px] border border-stone-200/80 bg-[linear-gradient(135deg,#f7f1ea_0%,#fffdf9_48%,#efe2d4_100%)] p-8 shadow-[0_24px_60px_rgba(120,96,74,0.08)] sm:p-10 lg:p-14">
           <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-1/3 bg-[radial-gradient(circle_at_center,rgba(214,199,185,0.34),transparent_62%)] lg:block" />
+          <div className="pointer-events-none absolute left-[-5rem] top-[-3rem] h-44 w-44 rounded-full bg-white/40 blur-3xl" />
           <p className="text-sm uppercase tracking-[0.22em] text-stone-500">Services</p>
           <h1 className="mt-4 text-4xl font-semibold text-stone-800 sm:text-5xl">
             Signature Treatments
@@ -672,21 +728,21 @@ function ServicesPage() {
           </p>
 
           <div className="mt-8 grid gap-4 md:grid-cols-3">
-            <div className="rounded-[24px] border border-white/70 bg-white/70 p-5 backdrop-blur">
+            <div className="rounded-[24px] border border-white/80 bg-white/75 p-5 shadow-sm backdrop-blur">
               <div className="text-xs uppercase tracking-[0.2em] text-stone-500">Atmosphere</div>
               <div className="mt-2 text-xl font-semibold text-stone-800">Soft and calming</div>
               <p className="mt-2 text-sm leading-6 text-stone-600">
                 A warm, polished setting tailored for calm beauty rituals.
               </p>
             </div>
-            <div className="rounded-[24px] border border-white/70 bg-white/70 p-5 backdrop-blur">
+            <div className="rounded-[24px] border border-white/80 bg-white/75 p-5 shadow-sm backdrop-blur">
               <div className="text-xs uppercase tracking-[0.2em] text-stone-500">Experience</div>
               <div className="mt-2 text-xl font-semibold text-stone-800">Thoughtful care</div>
               <p className="mt-2 text-sm leading-6 text-stone-600">
                 Every treatment is presented as a restorative service, not just a menu item.
               </p>
             </div>
-            <div className="rounded-[24px] border border-white/70 bg-white/70 p-5 backdrop-blur">
+            <div className="rounded-[24px] border border-white/80 bg-white/75 p-5 shadow-sm backdrop-blur">
               <div className="text-xs uppercase tracking-[0.2em] text-stone-500">Booking</div>
               <div className="mt-2 text-xl font-semibold text-stone-800">Custom consultation</div>
               <p className="mt-2 text-sm leading-6 text-stone-600">
@@ -696,7 +752,32 @@ function ServicesPage() {
           </div>
         </div>
 
-        <div className="mt-16">
+        <div className="mt-16 rounded-[34px] border border-stone-200/80 bg-white/75 p-6 shadow-[0_18px_45px_rgba(120,96,74,0.06)] backdrop-blur sm:p-8">
+          <div className="mb-8 border-b border-stone-200 pb-4">
+            <p className="text-sm uppercase tracking-[0.2em] text-stone-500">Head Spa</p>
+            <h2 className="mt-2 text-3xl font-semibold text-stone-800">Relaxation & Scalp Care Rituals</h2>
+          </div>
+
+          <div className="grid gap-6">
+            {headSpa.map((service) => (
+              <div key={service.name} className="rounded-[28px] border border-stone-200 bg-[linear-gradient(135deg,#f7f1ea_0%,#fffaf5_100%)] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:p-8">
+                <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                  <div className="max-w-3xl">
+                    <div className="flex flex-wrap items-center gap-3">
+                      <h3 className="text-2xl font-semibold text-stone-800">{service.name}</h3>
+                      <span className="rounded-full border border-stone-300 px-3 py-1 text-xs uppercase tracking-[0.18em] text-stone-600">
+                        {service.duration}
+                      </span>
+                    </div>
+                    <p className="mt-3 leading-7 text-stone-600">{service.description}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-20 rounded-[34px] border border-stone-200/80 bg-white/75 p-6 shadow-[0_18px_45px_rgba(120,96,74,0.06)] backdrop-blur sm:p-8">
           <div className="mb-8 border-b border-stone-200 pb-4">
             <p className="text-sm uppercase tracking-[0.2em] text-stone-500">Manicure</p>
             <h2 className="mt-2 text-3xl font-semibold text-stone-800">Elegant Hand Care</h2>
@@ -704,7 +785,7 @@ function ServicesPage() {
 
           <div className="grid gap-6">
             {manicures.map((service) => (
-              <div key={service.name} className="rounded-[28px] border border-stone-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:p-8">
+              <div key={service.name} className="rounded-[28px] border border-stone-200 bg-[linear-gradient(180deg,#ffffff_0%,#fbf7f2_100%)] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:p-8">
                 <div className="max-w-3xl">
                   <h3 className="text-2xl font-semibold text-stone-800">{service.name}</h3>
                   <p className="mt-3 leading-7 text-stone-600">{service.description}</p>
@@ -714,7 +795,7 @@ function ServicesPage() {
           </div>
         </div>
 
-        <div className="mt-20">
+        <div className="mt-20 rounded-[34px] border border-stone-200/80 bg-white/75 p-6 shadow-[0_18px_45px_rgba(120,96,74,0.06)] backdrop-blur sm:p-8">
           <div className="mb-8 border-b border-stone-200 pb-4">
             <p className="text-sm uppercase tracking-[0.2em] text-stone-500">Pedicure</p>
             <h2 className="mt-2 text-3xl font-semibold text-stone-800">Pedicure Menu</h2>
@@ -722,7 +803,7 @@ function ServicesPage() {
 
           <div className="grid gap-6">
             {pedicures.map((service) => (
-              <div key={service.name} className="rounded-[28px] border border-stone-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:p-8">
+              <div key={service.name} className="rounded-[28px] border border-stone-200 bg-[linear-gradient(180deg,#ffffff_0%,#fbf7f2_100%)] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:p-8">
                 <div className="max-w-3xl">
                   <h3 className="text-2xl font-semibold text-stone-800">{service.name}</h3>
                   <p className="mt-3 leading-7 text-stone-600">{service.description}</p>
@@ -732,18 +813,18 @@ function ServicesPage() {
           </div>
         </div>
 
-        <div className="mt-20">
+        <div className="mt-20 rounded-[34px] border border-stone-200/80 bg-white/75 p-6 shadow-[0_18px_45px_rgba(120,96,74,0.06)] backdrop-blur sm:p-8">
           <div className="mb-8 border-b border-stone-200 pb-4">
             <p className="text-sm uppercase tracking-[0.2em] text-stone-500">Nail Enhancement</p>
             <h2 className="mt-2 text-3xl font-semibold text-stone-800">
-              Full Set, Fill-In & Add-Ons
+              Full Set
             </h2>
           </div>
 
-          <div className="grid gap-8 lg:grid-cols-3">
-            <div className="rounded-[28px] border border-stone-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:p-8">
+          <div className="grid gap-8">
+            <div className="rounded-[28px] border border-stone-200 bg-[linear-gradient(180deg,#ffffff_0%,#fbf7f2_100%)] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:p-8">
               <h3 className="text-2xl font-semibold text-stone-800">Full Set</h3>
-              <div className="mt-6 space-y-3">
+              <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
                 {fullSet.map((item) => (
                   <div key={item.name} className="rounded-2xl bg-stone-50 px-4 py-3 text-stone-700">
                     {item.name}
@@ -751,81 +832,17 @@ function ServicesPage() {
                 ))}
               </div>
             </div>
-
-            <div className="rounded-[28px] border border-stone-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:p-8">
-              <h3 className="text-2xl font-semibold text-stone-800">Fill-In</h3>
-              <div className="mt-6 space-y-3">
-                {fillIn.map((item) => (
-                  <div key={item.name} className="rounded-2xl bg-stone-50 px-4 py-3 text-stone-700">
-                    {item.name}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="rounded-[28px] border border-stone-200 bg-[#f7f1ea] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:p-8">
-              <h3 className="text-2xl font-semibold text-stone-800">Add-Ons</h3>
-              <div className="mt-6 space-y-3">
-                {addOns.map((item) => (
-                  <div key={item.name} className="rounded-2xl bg-white/70 px-4 py-3 text-stone-700">
-                    {item.name}
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
 
-        <div className="mt-20">
-          <div className="mb-8 border-b border-stone-200 pb-4">
-            <p className="text-sm uppercase tracking-[0.2em] text-stone-500">Additional Services</p>
-            <h2 className="mt-2 text-3xl font-semibold text-stone-800">Finishing Touches & Add-Ons</h2>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <div className="rounded-[28px] border border-stone-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:p-8">
-              <h3 className="text-xl font-semibold text-stone-800">Polish Services</h3>
-              <div className="mt-6 space-y-3">
-                {additionalServices.polish.map((item) => (
-                  <div key={item.name} className="rounded-2xl bg-stone-50 px-4 py-3 text-stone-700">
-                    {item.name}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="rounded-[28px] border border-stone-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:p-8">
-              <h3 className="text-xl font-semibold text-stone-800">Nail Care</h3>
-              <div className="mt-6 space-y-3">
-                {additionalServices.nailCare.map((item) => (
-                  <div key={item.name} className="rounded-2xl bg-stone-50 px-4 py-3 text-stone-700">
-                    {item.name}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="rounded-[28px] border border-stone-200 bg-[#f7f1ea] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:p-8">
-              <h3 className="text-xl font-semibold text-stone-800">Enhancements</h3>
-              <div className="mt-6 space-y-3">
-                {additionalServices.extras.map((item) => (
-                  <div key={item.name} className="rounded-2xl bg-white/70 px-4 py-3 text-stone-700">
-                    {item.name}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-20">
+        <div className="mt-20 rounded-[34px] border border-stone-200/80 bg-white/75 p-6 shadow-[0_18px_45px_rgba(120,96,74,0.06)] backdrop-blur sm:p-8">
           <div className="mb-8 border-b border-stone-200 pb-4">
             <p className="text-sm uppercase tracking-[0.2em] text-stone-500">Waxing</p>
             <h2 className="mt-2 text-3xl font-semibold text-stone-800">Smooth Skin Services</h2>
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <div className="rounded-[28px] border border-stone-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:p-8">
+            <div className="rounded-[28px] border border-stone-200 bg-[linear-gradient(180deg,#ffffff_0%,#fbf7f2_100%)] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:p-8">
               <h3 className="text-xl font-semibold text-stone-800">Face</h3>
               <div className="mt-6 space-y-3">
                 {waxing.face.map((item) => (
@@ -836,7 +853,7 @@ function ServicesPage() {
               </div>
             </div>
 
-            <div className="rounded-[28px] border border-stone-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:p-8">
+            <div className="rounded-[28px] border border-stone-200 bg-[linear-gradient(180deg,#ffffff_0%,#fbf7f2_100%)] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:p-8">
               <h3 className="text-xl font-semibold text-stone-800">Arms & Underarms</h3>
               <div className="mt-6 space-y-3">
                 {waxing.arms.map((item) => (
@@ -847,7 +864,7 @@ function ServicesPage() {
               </div>
             </div>
 
-            <div className="rounded-[28px] border border-stone-200 bg-[#f7f1ea] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:p-8">
+            <div className="rounded-[28px] border border-stone-200 bg-[linear-gradient(135deg,#f7f1ea_0%,#fffaf5_100%)] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:p-8">
               <h3 className="text-xl font-semibold text-stone-800">Legs & Body</h3>
               <div className="mt-6 space-y-3">
                 {waxing.body.map((item) => (
@@ -860,14 +877,14 @@ function ServicesPage() {
           </div>
         </div>
 
-        <div className="mt-20">
+        <div className="mt-20 rounded-[34px] border border-stone-200/80 bg-white/75 p-6 shadow-[0_18px_45px_rgba(120,96,74,0.06)] backdrop-blur sm:p-8">
           <div className="mb-8 border-b border-stone-200 pb-4">
             <p className="text-sm uppercase tracking-[0.2em] text-stone-500">Eyelashes</p>
-            <h2 className="mt-2 text-3xl font-semibold text-stone-800">Lash Extensions & Refills</h2>
+            <h2 className="mt-2 text-3xl font-semibold text-stone-800">Lash Extensions</h2>
           </div>
 
-          <div className="grid gap-8 lg:grid-cols-2">
-            <div className="rounded-[28px] border border-stone-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:p-8">
+          <div className="grid gap-8">
+            <div className="rounded-[28px] border border-stone-200 bg-[linear-gradient(180deg,#ffffff_0%,#fbf7f2_100%)] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:p-8">
               <h3 className="text-2xl font-semibold text-stone-800">Full Set</h3>
               <div className="mt-6 space-y-6">
                 {lashes.fullSet.map((item) => (
@@ -878,36 +895,10 @@ function ServicesPage() {
                 ))}
               </div>
             </div>
-
-            <div className="rounded-[28px] border border-stone-200 bg-[#f7f1ea] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:p-8">
-              <h3 className="text-2xl font-semibold text-stone-800">Refill</h3>
-
-              <div className="mt-6">
-                <p className="text-sm uppercase tracking-[0.18em] text-stone-500">2 Week Refill</p>
-                <div className="mt-3 space-y-3">
-                  {lashes.refill2Week.map((item) => (
-                    <div key={item.name} className="rounded-2xl bg-white/70 px-4 py-3 text-stone-700">
-                      {item.name}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="mt-6">
-                <p className="text-sm uppercase tracking-[0.18em] text-stone-500">3 Week Refill</p>
-                <div className="mt-3 space-y-3">
-                  {lashes.refill3Week.map((item) => (
-                    <div key={item.name} className="rounded-2xl bg-white/70 px-4 py-3 text-stone-700">
-                      {item.name}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 
-        <div className="mt-20">
+        <div className="mt-20 rounded-[34px] border border-stone-200/80 bg-white/75 p-6 shadow-[0_18px_45px_rgba(120,96,74,0.06)] backdrop-blur sm:p-8">
           <div className="mb-8 border-b border-stone-200 pb-4">
             <p className="text-sm uppercase tracking-[0.2em] text-stone-500">Kids Services</p>
             <h2 className="mt-2 text-3xl font-semibold text-stone-800">For Little Guests (10 & Under)</h2>
@@ -920,31 +911,6 @@ function ServicesPage() {
                 {item.detail && <p className="mt-2 text-sm text-stone-500">{item.detail}</p>}
                 <div className="mt-6 rounded-2xl bg-stone-50 px-4 py-4 text-sm leading-6 text-stone-600">
                   Gentle, age-appropriate pampering for little guests in a calm and welcoming setting.
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-20">
-          <div className="mb-8 border-b border-stone-200 pb-4">
-            <p className="text-sm uppercase tracking-[0.2em] text-stone-500">Head Spa</p>
-            <h2 className="mt-2 text-3xl font-semibold text-stone-800">Relaxation & Scalp Care Rituals</h2>
-          </div>
-
-          <div className="grid gap-6">
-            {headSpa.map((service) => (
-              <div key={service.name} className="rounded-[28px] border border-stone-200 bg-[#f7f1ea] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:p-8">
-                <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-                  <div className="max-w-3xl">
-                    <div className="flex flex-wrap items-center gap-3">
-                      <h3 className="text-2xl font-semibold text-stone-800">{service.name}</h3>
-                      <span className="rounded-full border border-stone-300 px-3 py-1 text-xs uppercase tracking-[0.18em] text-stone-600">
-                        {service.duration}
-                      </span>
-                    </div>
-                    <p className="mt-3 leading-7 text-stone-600">{service.description}</p>
-                  </div>
                 </div>
               </div>
             ))}
