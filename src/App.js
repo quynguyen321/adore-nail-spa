@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 
 const site = {
   name: 'Adore Nail Spa',
-  phone: '(214) 555-0188',
-  email: 'hello@adorenailspa.com',
-  bookingLink: 'mailto:hello@adorenailspa.com?subject=Book%20an%20Appointment',
+  phone: '(469) 338-5134',
+  email: 'adorenailsspa89@gmail.com',
+  bookingLink: 'mailto:adorenailsspa89@gmail.com?subject=Book%20an%20Appointment',
   address: '177 W Farm to Market Rd 550, Suite 104, McLendon-Chisholm, TX 75032',
   hours: [
     'Mon - Fri: 10:00 AM - 7:00 PM',
@@ -41,7 +41,7 @@ const gallery = [
   },
   {
     title: 'Champagne Nude',
-    note: 'Glossy beige almond nails with tiny gold foil accents for understated luxury.',
+    note: 'Glossy beige almond nails with tiny gold foil accents for a soft, polished finish.',
     image: '/gallery-6.png',
   },
 ];
@@ -70,7 +70,7 @@ function Card({ children, className = '' }) {
   );
 }
 
-function Button({ children, onClick, full = false, outline = false, href }) {
+function Button({ children, onClick, full = false, outline = false, href, type = 'button' }) {
   const className = [
     'rounded-full px-6 py-3 text-sm uppercase tracking-[0.18em] transition duration-300 inline-flex items-center justify-center shadow-sm',
     full ? 'w-full sm:w-auto' : '',
@@ -93,26 +93,34 @@ function Button({ children, onClick, full = false, outline = false, href }) {
   }
 
   return (
-    <button type="button" onClick={onClick} className={className}>
+    <button type={type} onClick={onClick} className={className}>
       {children}
     </button>
   );
 }
 
-function Input({ placeholder, type = 'text' }) {
+function Input({ placeholder, type = 'text', value, onChange, name, required }) {
   return (
     <input
+      name={name}
       type={type}
       placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+      required={required}
       className="h-12 w-full rounded-2xl border border-stone-300 bg-white/90 px-4 text-stone-700 outline-none transition focus:border-stone-500 focus:shadow-[0_0_0_4px_rgba(214,199,185,0.3)]"
     />
   );
 }
 
-function Textarea({ placeholder }) {
+function Textarea({ placeholder, value, onChange, name, required }) {
   return (
     <textarea
+      name={name}
       placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+      required={required}
       className="min-h-[140px] w-full rounded-2xl border border-stone-300 bg-white/90 px-4 py-3 text-stone-700 outline-none transition focus:border-stone-500 focus:shadow-[0_0_0_4px_rgba(214,199,185,0.3)]"
     />
   );
@@ -213,9 +221,9 @@ function Footer({ setCurrentPage }) {
             <div>
             <Logo />
             <p className="mt-4 max-w-sm text-sm leading-7 text-stone-600">
-              A luxury neutral-toned nail destination offering elegant manicures,
-              restorative pedicures, head spa, waxing, lashes, and polished beauty in
-              a calming spa experience.
+              A polished nail and beauty destination offering elegant manicures,
+              restorative pedicures, head spa, waxing, lashes, and thoughtful care in
+              a calm, welcoming setting.
             </p>
             </div>
 
@@ -263,7 +271,7 @@ function HomePage({ setCurrentPage }) {
         <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1fr_1.05fr] lg:px-8 lg:py-28">
           <div>
             <div className="inline-flex rounded-full border border-white/70 bg-white/70 px-4 py-2 text-[11px] uppercase tracking-[0.24em] text-stone-500 shadow-sm backdrop-blur sm:text-xs">
-              Luxury Nail Experience
+              Nail Care Experience
             </div>
 
             <h1 className="mt-6 text-4xl font-semibold leading-tight text-stone-800 sm:text-5xl lg:text-7xl">
@@ -271,9 +279,9 @@ function HomePage({ setCurrentPage }) {
             </h1>
 
             <p className="mt-6 max-w-xl text-base leading-7 text-stone-600 sm:text-lg sm:leading-8">
-              Welcome to Adore Nail Spa, a luxury beauty destination where thoughtful care,
-              elevated technique, and a calming atmosphere come together to create an experience
-              that feels as beautiful as the final result.
+              Welcome to Adore Nail Spa, where thoughtful care, beautiful detail, and a calming
+              atmosphere come together to create an experience that feels relaxing, personal,
+              and beautifully finished.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
@@ -287,9 +295,9 @@ function HomePage({ setCurrentPage }) {
 
             <div className="mt-10 grid gap-4 sm:grid-cols-3">
               {[
-                { label: 'Luxury Care', value: '5-Star' },
-                { label: 'Atmosphere', value: 'Calm & Neutral' },
-                { label: 'Design', value: 'Elegant' },
+                { label: 'Care', value: 'Thoughtful' },
+                { label: 'Atmosphere', value: 'Calm & Welcoming' },
+                { label: 'Style', value: 'Elegant' },
               ].map((item) => (
                 <Card key={item.label} className="bg-white/70">
                   <div className="p-5">
@@ -357,7 +365,7 @@ function HomePage({ setCurrentPage }) {
                       <div>
                         <p className="text-lg font-medium text-stone-800">Easy to Visit</p>
                         <p className="mt-2 text-sm leading-6 text-stone-600">
-                          A welcoming salon space created to feel calm, comfortable, and effortlessly luxurious.
+                          A welcoming salon space created to feel calm, comfortable, and beautifully put together.
                         </p>
                       </div>
                     </div>
@@ -415,8 +423,8 @@ function AboutPage() {
                 <div className="rounded-[22px] bg-white/80 p-5">
                   <h2 className="text-xl font-semibold text-stone-800">Our Philosophy</h2>
                   <p className="mt-3 text-sm leading-7 text-stone-600">
-                    We believe true luxury is found in thoughtful service, clean technique, beautiful details,
-                    and an experience that feels calm, personal, and effortlessly elevated.
+                    We believe great service comes from thoughtful care, clean technique, beautiful details,
+                    and an experience that feels calm, personal, and genuinely welcoming.
                   </p>
                 </div>
                 <div className="rounded-[22px] bg-white/80 p-5">
@@ -666,7 +674,7 @@ function ServicesPage() {
           <div className="mt-8 grid gap-4 md:grid-cols-3">
             <div className="rounded-[24px] border border-white/70 bg-white/70 p-5 backdrop-blur">
               <div className="text-xs uppercase tracking-[0.2em] text-stone-500">Atmosphere</div>
-              <div className="mt-2 text-xl font-semibold text-stone-800">Soft luxury</div>
+              <div className="mt-2 text-xl font-semibold text-stone-800">Soft and calming</div>
               <p className="mt-2 text-sm leading-6 text-stone-600">
                 A warm, polished setting tailored for calm beauty rituals.
               </p>
@@ -709,7 +717,7 @@ function ServicesPage() {
         <div className="mt-20">
           <div className="mb-8 border-b border-stone-200 pb-4">
             <p className="text-sm uppercase tracking-[0.2em] text-stone-500">Pedicure</p>
-            <h2 className="mt-2 text-3xl font-semibold text-stone-800">Luxury Pedicure Menu</h2>
+            <h2 className="mt-2 text-3xl font-semibold text-stone-800">Pedicure Menu</h2>
           </div>
 
           <div className="grid gap-6">
@@ -962,7 +970,7 @@ function GalleryPage() {
               A curated look at our signature style.
             </h1>
             <p className="mt-6 text-lg leading-8 text-stone-600">
-              Explore elegant neutrals, soft luxury finishes, and timeless beauty designed to feel elevated and effortlessly beautiful.
+              Explore elegant neutrals, soft finishes, and timeless nail designs created to feel polished and effortlessly beautiful.
             </p>
           </div>
 
@@ -1004,6 +1012,44 @@ function GalleryPage() {
 }
 
 function ContactPage() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: '',
+  });
+  const [formError, setFormError] = useState('');
+  const [formSuccess, setFormSuccess] = useState('');
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((current) => ({ ...current, [name]: value }));
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      setFormError('Please fill in your name, email, and message.');
+      setFormSuccess('');
+      return;
+    }
+
+    const subject = `New inquiry from ${formData.name.trim()}`;
+    const body = [
+      `Name: ${formData.name.trim()}`,
+      `Email: ${formData.email.trim()}`,
+      `Phone: ${formData.phone.trim() || 'Not provided'}`,
+      '',
+      'Message:',
+      formData.message.trim(),
+    ].join('\n');
+
+    window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setFormError('');
+    setFormSuccess('Your email app is opening with your message ready to send.');
+  };
+
   return (
     <main className="bg-[linear-gradient(180deg,#fcfaf7_0%,#f5eee6_100%)]">
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-[1.05fr_0.95fr] lg:gap-10 lg:px-8 lg:py-24">
@@ -1011,10 +1057,10 @@ function ContactPage() {
           <div className="rounded-[34px] border border-stone-200 bg-white/75 p-8 shadow-[0_20px_55px_rgba(120,96,74,0.08)] backdrop-blur sm:p-10">
             <p className="text-sm uppercase tracking-[0.22em] text-stone-500">Contact Us</p>
             <h1 className="mt-4 text-4xl font-semibold text-stone-800 sm:text-5xl">
-              Let’s plan your next luxury appointment.
+              Let’s plan your next appointment.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-stone-600">
-              Reach out for appointments, questions, bridal bookings, or custom service requests. We would love to welcome you to Adore Nail Spa.
+              Reach out for appointments, questions, bridal bookings, or custom service requests. We would love to help you plan your visit to Adore Nail Spa.
             </p>
 
             <div className="mt-8 rounded-[24px] bg-[#f7f1ea] p-5">
@@ -1076,37 +1122,76 @@ function ContactPage() {
                 <span className="font-medium text-stone-700">{site.email}</span>
               </p>
 
-              <form className="mt-8 space-y-5 rounded-[26px] bg-white/75 p-6 shadow-sm backdrop-blur">
+              <form
+                className="mt-8 space-y-5 rounded-[26px] bg-white/75 p-6 shadow-sm backdrop-blur"
+                onSubmit={handleSubmit}
+              >
                 <div>
                   <label className="mb-2 block text-sm uppercase tracking-[0.18em] text-stone-500">
                     Name
                   </label>
-                  <Input placeholder="Your name" />
+                  <Input
+                    name="name"
+                    placeholder="Your name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
 
                 <div>
                   <label className="mb-2 block text-sm uppercase tracking-[0.18em] text-stone-500">
                     Email
                   </label>
-                  <Input type="email" placeholder="Your email" />
+                  <Input
+                    name="email"
+                    type="email"
+                    placeholder="Your email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
 
                 <div>
                   <label className="mb-2 block text-sm uppercase tracking-[0.18em] text-stone-500">
                     Phone
                   </label>
-                  <Input placeholder="Your phone number" />
+                  <Input
+                    name="phone"
+                    placeholder="Your phone number"
+                    value={formData.phone}
+                    onChange={handleChange}
+                  />
                 </div>
 
                 <div>
                   <label className="mb-2 block text-sm uppercase tracking-[0.18em] text-stone-500">
                     Message
                   </label>
-                  <Textarea placeholder="Tell us what service you're interested in" />
+                  <Textarea
+                    name="message"
+                    placeholder="Tell us what service you're interested in"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
 
-                <Button href={`mailto:${site.email}`} full>
-                  Email Us
+                {formError && (
+                  <p className="rounded-2xl bg-[#f8e7e2] px-4 py-3 text-sm text-[#8a4d3c]">
+                    {formError}
+                  </p>
+                )}
+
+                {formSuccess && (
+                  <p className="rounded-2xl bg-[#e9f3e8] px-4 py-3 text-sm text-[#4f6b4d]">
+                    {formSuccess}
+                  </p>
+                )}
+
+                <Button type="submit" full>
+                  Send Message
                 </Button>
               </form>
             </div>
