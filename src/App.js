@@ -4,7 +4,7 @@ const site = {
   name: 'Adore Nail Spa',
   phone: '(469) 338-5134',
   email: 'adorenailsspa89@gmail.com',
-  bookingLink: 'mailto:adorenailsspa89@gmail.com?subject=Book%20an%20Appointment',
+  bookingLink: 'https://abcapp.us?appid=vgSrxqu',
   facebookLink: 'https://www.facebook.com/profile.php?id=61587486039975&mibextid=wwXIfr&rdid=fCvkkkZpRsKO9L97&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1ED5K64t2H%2F%3Fmibextid%3DwwXIfr',
   instagramLink: 'https://www.instagram.com/adorenailsandspa_mclendon?igsh=OTNiZ295bmR2OWJ4&utm_source=qr',
   address: '177 W Farm to Market Rd 550, Suite 104, McLendon-Chisholm, TX 75032',
@@ -101,39 +101,12 @@ function Button({ children, onClick, full = false, outline = false, href, type =
   );
 }
 
-function Input({ placeholder, type = 'text', value, onChange, name, required }) {
-  return (
-    <input
-      name={name}
-      type={type}
-      placeholder={placeholder}
-      value={value}
-      onChange={onChange}
-      required={required}
-      className="h-12 w-full rounded-2xl border border-stone-300 bg-white/90 px-4 text-stone-700 outline-none transition focus:border-stone-500 focus:shadow-[0_0_0_4px_rgba(214,199,185,0.3)]"
-    />
-  );
-}
-
-function Textarea({ placeholder, value, onChange, name, required }) {
-  return (
-    <textarea
-      name={name}
-      placeholder={placeholder}
-      value={value}
-      onChange={onChange}
-      required={required}
-      className="min-h-[140px] w-full rounded-2xl border border-stone-300 bg-white/90 px-4 py-3 text-stone-700 outline-none transition focus:border-stone-500 focus:shadow-[0_0_0_4px_rgba(214,199,185,0.3)]"
-    />
-  );
-}
-
 function Logo() {
   return (
     <img
       src="/adore-logo.png"
       alt="Adore Nail Spa logo"
-      className="brand-logo h-16 w-auto object-contain sm:h-20"
+      className="brand-logo h-14 w-auto object-contain sm:h-16 lg:h-18"
     />
   );
 }
@@ -206,7 +179,7 @@ function NavBar({ currentPage, setCurrentPage }) {
   return (
     <header className="sticky top-0 z-50 bg-[#f7f1ea]/75 backdrop-blur">
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between gap-4 rounded-full border border-white/80 bg-white/75 px-4 py-3 shadow-[0_12px_35px_rgba(120,96,74,0.08)] backdrop-blur sm:px-6">
+        <div className="flex items-center justify-between gap-4 rounded-full border border-white/80 bg-white/75 px-4 py-2.5 shadow-[0_12px_35px_rgba(120,96,74,0.08)] backdrop-blur sm:px-6">
           <button type="button" onClick={() => handleNavClick('home')}>
             <Logo />
           </button>
@@ -978,44 +951,6 @@ function GalleryPage() {
 }
 
 function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: '',
-  });
-  const [formError, setFormError] = useState('');
-  const [formSuccess, setFormSuccess] = useState('');
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((current) => ({ ...current, [name]: value }));
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
-      setFormError('Please fill in your name, email, and message.');
-      setFormSuccess('');
-      return;
-    }
-
-    const subject = `New inquiry from ${formData.name.trim()}`;
-    const body = [
-      `Name: ${formData.name.trim()}`,
-      `Email: ${formData.email.trim()}`,
-      `Phone: ${formData.phone.trim() || 'Not provided'}`,
-      '',
-      'Message:',
-      formData.message.trim(),
-    ].join('\n');
-
-    window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    setFormError('');
-    setFormSuccess('Your email app is opening with your message ready to send.');
-  };
-
   return (
     <main className="bg-[linear-gradient(180deg,#fcfaf7_0%,#f5eee6_100%)]">
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-[1.05fr_0.95fr] lg:gap-10 lg:px-8 lg:py-24">
@@ -1028,138 +963,69 @@ function ContactPage() {
             <p className="mt-6 max-w-2xl text-lg leading-8 text-stone-600">
               Reach out for appointments, questions, bridal bookings, or custom service requests. We would love to help you plan your visit to Adore Nail Spa.
             </p>
+            <div className="mt-10 border-t border-stone-200 pt-8">
+              <p className="text-sm uppercase tracking-[0.2em] text-stone-500">Contact Details</p>
+              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                <div className="flex items-start gap-4 rounded-[22px] bg-[#f8f3ed] p-5">
+                  <Icon>☎</Icon>
+                  <div>
+                    <p className="text-sm uppercase tracking-[0.18em] text-stone-500">Phone</p>
+                    <p className="mt-2 text-lg font-medium text-stone-800">{site.phone}</p>
+                  </div>
+                </div>
 
-            <div className="mt-8 rounded-[24px] bg-[#f7f1ea] p-5">
-              <p className="text-xs uppercase tracking-[0.2em] text-stone-500">Best For</p>
-              <p className="mt-2 text-sm leading-7 text-stone-600">
-                Appointment inquiries, service questions, bridal bookings, and personalized recommendations.
-              </p>
-            </div>
-          </div>
+                <div className="flex items-start gap-4 rounded-[22px] bg-[#f8f3ed] p-5">
+                  <Icon>✉</Icon>
+                  <div>
+                    <p className="text-sm uppercase tracking-[0.18em] text-stone-500">Email</p>
+                    <p className="mt-2 break-all text-lg font-medium text-stone-800">{site.email}</p>
+                  </div>
+                </div>
 
-          <div className="mt-10 grid gap-5 sm:grid-cols-2">
-            <Card>
-              <div className="p-6">
-                <Icon>☎</Icon>
-                <p className="mt-3 text-sm uppercase tracking-[0.18em] text-stone-500">Phone</p>
-                <p className="mt-2 text-lg font-medium text-stone-800">{site.phone}</p>
-              </div>
-            </Card>
+                <div className="flex items-start gap-4 rounded-[22px] bg-[#f8f3ed] p-5 sm:col-span-2">
+                  <Icon>📍</Icon>
+                  <div>
+                    <p className="text-sm uppercase tracking-[0.18em] text-stone-500">Location</p>
+                    <p className="mt-2 text-lg font-medium text-stone-800">{site.address}</p>
+                  </div>
+                </div>
 
-            <Card>
-              <div className="p-6">
-                <Icon>✉</Icon>
-                <p className="mt-3 text-sm uppercase tracking-[0.18em] text-stone-500">Email</p>
-                <p className="mt-2 break-all text-lg font-medium text-stone-800">{site.email}</p>
-              </div>
-            </Card>
-
-            <Card className="sm:col-span-2">
-              <div className="p-6">
-                <Icon>📍</Icon>
-                <p className="mt-3 text-sm uppercase tracking-[0.18em] text-stone-500">Location</p>
-                <p className="mt-2 text-lg font-medium text-stone-800">{site.address}</p>
-              </div>
-            </Card>
-
-            <Card className="sm:col-span-2">
-              <div className="p-6">
-                <Icon>⏰</Icon>
-                <p className="mt-3 text-sm uppercase tracking-[0.18em] text-stone-500">Hours</p>
-                <div className="mt-2 space-y-2 text-stone-700">
-                  {site.hours.map((line) => (
-                    <p key={line}>{line}</p>
-                  ))}
+                <div className="flex items-start gap-4 rounded-[22px] bg-[#f8f3ed] p-5 sm:col-span-2">
+                  <Icon>⏰</Icon>
+                  <div>
+                    <p className="text-sm uppercase tracking-[0.18em] text-stone-500">Hours</p>
+                    <div className="mt-2 space-y-2 text-stone-700">
+                      {site.hours.map((line) => (
+                        <p key={line}>{line}</p>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
-            </Card>
+            </div>
           </div>
         </div>
 
         <div className="mt-10 lg:mt-0">
           <Card className="overflow-hidden border-none bg-gradient-to-br from-[#efe4d8] via-[#f9f6f1] to-[#ddd0c3] shadow-[0_24px_60px_rgba(120,96,74,0.12)]">
-            <div className="p-8">
-              <h2 className="text-2xl font-semibold text-stone-800">Send us a message</h2>
-              <p className="mt-3 leading-7 text-stone-600">
-                Ask about services, event bookings, or preferred appointment times.
+            <div className="p-8 sm:p-10">
+              <h2 className="text-2xl font-semibold text-stone-800">Book Your Appointment</h2>
+              <p className="mt-4 leading-7 text-stone-600">
+                Reserve your visit directly using our booking link. We are happy to welcome you for nail care, head spa, lashes, waxing, and more.
               </p>
-              <p className="mt-3 text-sm text-stone-500">
-                Or email us directly at{' '}
-                <span className="font-medium text-stone-700">{site.email}</span>
-              </p>
-
-              <form
-                className="mt-8 space-y-5 rounded-[26px] bg-white/75 p-6 shadow-sm backdrop-blur"
-                onSubmit={handleSubmit}
-              >
-                <div>
-                  <label className="mb-2 block text-sm uppercase tracking-[0.18em] text-stone-500">
-                    Name
-                  </label>
-                  <Input
-                    name="name"
-                    placeholder="Your name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                  />
+              <div className="mt-8 rounded-[26px] bg-white/75 p-6 shadow-sm backdrop-blur">
+                <div className="flex flex-col gap-5">
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.2em] text-stone-500">Quick Booking</p>
+                    <p className="mt-2 text-sm leading-7 text-stone-600">
+                      Tap below to book your appointment online.
+                    </p>
+                  </div>
+                  <Button href={site.bookingLink} full>
+                    Book Now
+                  </Button>
                 </div>
-
-                <div>
-                  <label className="mb-2 block text-sm uppercase tracking-[0.18em] text-stone-500">
-                    Email
-                  </label>
-                  <Input
-                    name="email"
-                    type="email"
-                    placeholder="Your email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="mb-2 block text-sm uppercase tracking-[0.18em] text-stone-500">
-                    Phone
-                  </label>
-                  <Input
-                    name="phone"
-                    placeholder="Your phone number"
-                    value={formData.phone}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <div>
-                  <label className="mb-2 block text-sm uppercase tracking-[0.18em] text-stone-500">
-                    Message
-                  </label>
-                  <Textarea
-                    name="message"
-                    placeholder="Tell us what service you're interested in"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-
-                {formError && (
-                  <p className="rounded-2xl bg-[#f8e7e2] px-4 py-3 text-sm text-[#8a4d3c]">
-                    {formError}
-                  </p>
-                )}
-
-                {formSuccess && (
-                  <p className="rounded-2xl bg-[#e9f3e8] px-4 py-3 text-sm text-[#4f6b4d]">
-                    {formSuccess}
-                  </p>
-                )}
-
-                <Button type="submit" full>
-                  Send Message
-                </Button>
-              </form>
+              </div>
             </div>
           </Card>
         </div>
