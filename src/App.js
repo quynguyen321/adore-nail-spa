@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 const site = {
   name: 'Adore Nail Spa',
-  phone: '(469) 338-5134',
+  phone: '(469) 338-5108',
   email: 'adorenailsspa89@gmail.com',
   bookingLink: 'https://abcapp.us?appid=vgSrxqu',
   facebookLink: 'https://www.facebook.com/profile.php?id=61587486039975&mibextid=wwXIfr&rdid=fCvkkkZpRsKO9L97&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1ED5K64t2H%2F%3Fmibextid%3DwwXIfr',
