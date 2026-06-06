@@ -106,7 +106,7 @@ function Logo() {
     <img
       src="/adore-logo.png"
       alt="Adore Nail Spa logo"
-      className="brand-logo h-14 w-auto object-contain sm:h-16 lg:h-18"
+      className="brand-logo h-12 w-auto object-contain sm:h-14 lg:h-16"
     />
   );
 }

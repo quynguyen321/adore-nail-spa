@@ -25,8 +25,7 @@ body {
 }
 
 .brand-logo {
-  filter: sepia(0.28) saturate(0.7) hue-rotate(-12deg) brightness(0.9) contrast(1.08)
-    drop-shadow(0 0 0.6px rgba(0, 0, 0, 0.9));
+  filter: sepia(0.22) saturate(0.55) hue-rotate(-10deg) brightness(0.95) contrast(1.02);
   opacity: 1;
 }
 
